@@ -1,0 +1,93 @@
+// Firestore Security Rules
+// Скопируйте эти правила в Firebase Console -> Firestore -> Rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Функция проверки аутентификации
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Функция проверки владельца
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Функция проверки владельца ресурса
+    function isResourceOwner() {
+      return isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // Функция проверки владельца в новых данных
+    function isNewResourceOwner() {
+      return isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // ===== Коллекция пользователей =====
+    match /users/{userId} {
+      // Пользователь может читать и писать только свой документ
+      allow read, write: if isOwner(userId);
+    }
+    
+    // ===== Коллекция URL =====
+    match /urls/{urlId} {
+      // Чтение: только владелец
+      allow read: if isResourceOwner();
+      
+      // Создание: аутентифицированный пользователь, userId должен совпадать
+      allow create: if isNewResourceOwner();
+      
+      // Обновление: только владелец
+      allow update: if isResourceOwner() && isNewResourceOwner();
+      
+      // Удаление: только владелец
+      allow delete: if isResourceOwner();
+    }
+    
+    // ===== Коллекция изменений =====
+    match /changes/{changeId} {
+      // Чтение: только владелец
+      allow read: if isResourceOwner();
+      
+      // Создание: аутентифицированный пользователь (обычно через Cloud Functions)
+      allow create: if isNewResourceOwner();
+      
+      // Обновление: только владелец (для отметки прочитанных)
+      allow update: if isResourceOwner();
+      
+      // Удаление: только владелец
+      allow delete: if isResourceOwner();
+    }
+    
+    // ===== Коллекция логов =====
+    match /logs/{logId} {
+      // Чтение: только владелец
+      allow read: if isResourceOwner();
+      
+      // Создание: аутентифицированный пользователь
+      allow create: if isNewResourceOwner();
+      
+      // Запрет обновления и удаления (логи неизменяемы)
+      allow update, delete: if false;
+    }
+    
+    // ===== Настройки уведомлений =====
+    match /notifications/{userId} {
+      // Только владелец может читать и писать
+      allow read, write: if isOwner(userId);
+    }
+    
+    // ===== Расписание мониторинга =====
+    match /schedules/{userId} {
+      // Только владелец может читать и писать
+      allow read, write: if isOwner(userId);
+    }
+    
+    // ===== Запрет доступа ко всему остальному =====
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
