@@ -1,5 +1,4 @@
-import { useStore } from '../../store/useStore';
-import { Sidebar } from './Sidebar';
+import { useStore } from './useStore';import { Sidebar } from './Sidebar';
 import { UrlManager } from './UrlManager';
 import { ChangesView } from './ChangesView';
 import { LogsView } from './LogsView';
