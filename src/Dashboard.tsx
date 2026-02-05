@@ -1,9 +1,10 @@
-import { useStore } from './useStore';import { Sidebar } from './Sidebar';
+import { useStore } from './useStore';
+import { Sidebar } from './Sidebar';
 import { UrlManager } from './UrlManager';
 import { ChangesView } from './ChangesView';
 import { LogsView } from './LogsView';
 import { SettingsView } from './SettingsView';
-import { ParallaxBackground } from '../UI/ParallaxBackground';
+import { ParallaxBackground } from './ParallaxBackground';
 import { Loader2 } from 'lucide-react';
 
 export function Dashboard() {
