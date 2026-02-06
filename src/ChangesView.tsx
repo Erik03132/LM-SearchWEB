@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from './useStore';
 import { 
   Download, 
   ExternalLink, 
@@ -16,7 +16,7 @@ import {
   TrendingUp,
   Clock
 } from 'lucide-react';
-import type { ChangeRecord } from '../../types';
+import type { ChangeRecord } from '../index';
 
 export function ChangesView() {
   const { changes, urls } = useStore();

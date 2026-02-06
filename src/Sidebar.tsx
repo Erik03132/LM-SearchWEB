@@ -1,4 +1,4 @@
-import { useStore } from '../../store/useStore';
+import { useStore } from './useStore';
 import { 
   Link2, 
   Bell, 

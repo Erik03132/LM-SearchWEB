@@ -2,8 +2,8 @@
 
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
-import type { User, MonitoredUrl, ChangeRecord, LogEntry, Chunk, ChunkChange } from '../types';
-import { calculateChecksum, splitIntoChunks, extractTextFromXml, extractTitle, compareChunks } from '../checksum';
+import type { User, MonitoredUrl, ChangeRecord, LogEntry, Chunk, ChunkChange } from '../index';
+import { calculateChecksum, splitIntoChunks, extractTextFromHtml, extractTitle, compareChunks } from '../checksum';
 interface StoreState {
   // Auth state
   user: User | null;
