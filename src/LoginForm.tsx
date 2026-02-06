@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from './useStore';
 import { Mail, Lock, User, LogIn, UserPlus, Sparkles, Globe, Shield, Zap } from 'lucide-react';
-import { ParallaxBackground } from '../UI/ParallaxBackground';
+import { ParallaxBackground } from './ParallaxBackground';
 
 export function LoginForm() {
   const [isLogin, setIsLogin] = useState(true);

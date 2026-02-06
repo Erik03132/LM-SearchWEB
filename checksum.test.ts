@@ -7,7 +7,7 @@ import {
   extractTextFromHtml, 
   extractTitle,
   compareChunks 
-} from './checksum';
+} from './src/checksum';
 
 // ===== Тесты calculateChecksum =====
 

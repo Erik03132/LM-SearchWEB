@@ -18,12 +18,11 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: false,
-    minify: "terser",
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom"],
-          firebase: ["firebase/app", "firebase/auth", "firebase/firestore"],
           ui: ["lucide-react", "zustand"],
         },
       },
